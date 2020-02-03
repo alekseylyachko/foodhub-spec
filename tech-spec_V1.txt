@@ -1,0 +1,62 @@
+backend:
+
+	auth api:
+	
+		org.springframework.boot:
+		
+			spring-boot-maven-plugin:
+			
+			spring-boot-starter-web:
+		
+			spring-boot-starter-data-mongodb:
+			
+			spring-boot-starter-test:
+			
+				org.junit.vintage:
+				
+					junit-vintage-engine:
+				
+		org.framework.security:
+
+			spring-boot-security-core:
+			
+			spring-boot-security-test:
+			
+			spring-boot-security-config:
+			
+			spring-boot-security-web:
+			
+		jsonwebtoken:
+	
+	content api:
+	
+		org.springframework.boot:
+		
+			spring-boot-maven-plugin:
+		
+			spring-boot-starter-web:
+			
+		jsonwebtoken:
+			
+	databases:
+	
+		mongodb:
+		
+			mlab.com:
+		
+		postgres:
+	
+
+frontend:
+
+	react server:
+	
+	
+application:
+
+	swift:
+	
+		alamofire:
+		
+		
+
