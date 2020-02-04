@@ -45,6 +45,8 @@ backend:
 			mlab.com:
 		
 		postgres:
+		
+			heroku
 	
 
 frontend:
