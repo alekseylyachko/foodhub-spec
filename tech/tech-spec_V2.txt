@@ -33,7 +33,17 @@ backend:
 
 frontend:
 
-	react server:
+	typescript:
+	
+		react:
+		
+		react-redux:
+		
+		redux-observables:
+		
+		connected-react-router:
+		
+		react-i18next:
 	
 	
 application:
