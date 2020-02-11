@@ -1,1 +1,46 @@
+backend:
+
+	kotlin:
+	
+		org.springframework.boot:
+			
+			spring-boot-starter-web:
+			
+			spring-boot-starter-test:
+			
+				org.junit.vintage:
+				
+					junit-vintage-engine:
+				
+		org.framework.security:
+
+			spring-boot-security-core:
+			
+			spring-boot-security-test:
+			
+			spring-boot-security-config:
+			
+			spring-boot-security-web:
+			
+		jsonwebtoken:
+			
+	database:
+	
+		postgres:
+		
+			heroku
+	
+
+frontend:
+
+	react server:
+	
+	
+application:
+
+	swift:
+	
+		alamofire:
+		
+		
 
