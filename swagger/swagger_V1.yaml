@@ -1,0 +1,315 @@
+swagger: "2.0"
+info:
+  description: "have fun"
+  version: "0.0.1 alpha"
+  title: "foodhub-server"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "petstore.swagger.io"
+basePath: "/v2"
+tags:
+- name: "sessions"
+  description: "Manage sessions"
+- name: "user"
+  description: "User info and actions"
+- name: "dish"
+  description: "Dishes and actions"
+- name: "market"
+  description: "Markets and actions"
+schemes:
+- "https"
+- "http"
+paths:
+#
+#
+#
+#SESSIONS
+#
+#
+#
+  /sessions/login:
+    post:
+      tags:
+      - "sessions"
+      summary: "Logs user in"
+      description: "Attempt to create session"
+      operationId: "createSession"
+      produces:
+      - "application/json"
+      parameters: 
+      - name: "username"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Response"
+          headers:
+            Token:
+              type: "string"
+              description: "generated token"
+            X-Expires-After:
+              type: "string"
+              format: "date-time"
+              description: "date in UTC when token expires"
+        400:
+          description: "unsuccessful operation"
+          schema:
+            $ref: "#/definitions/Response"
+      security:
+      - api_key: []
+  /sessions/logout:
+    put:
+      tags:
+      - "sessions"
+      summary: "Logs user out"
+      description: "Attempt to close session"
+      operationId: "closeSession"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Response"
+        400:
+          description: "unsuccessful operation"
+          schema:
+            $ref: "#/definitions/Response"
+      security:
+      - api_key: []
+  /sessions/me:
+    get:
+      tags:
+      - "sessions"
+      summary: "Returns token if logged in"
+      description: "Returns current user"
+      operationId: "checkSession"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Response"
+          headers:
+            Token:
+              type: "string"
+              description: "generated token"
+            X-Expires-After:
+              type: "string"
+              format: "date-time"
+              description: "date in UTC when token expires"
+        400:
+          description: "unsuccessful operation"
+          schema:
+            $ref: "#/definitions/Response"
+      security:
+      - api_key: []
+#
+#
+#
+#         USER
+#
+#
+#
+  /user/{username}:
+    get:
+      tags:
+      - "user"
+      summary: "Returns user"
+      description: "User by username"
+      operationId: "getUserByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid username supplied"
+          schema:
+            $ref: "#/definitions/Response"
+        404:
+          description: "User not found"
+          schema:
+            $ref: "#/definitions/Response"
+    put:
+      tags:
+      - "user"
+      summary: "Updated user"
+      description: "This can only be done by the logged in user."
+      operationId: "updateUserByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Updated user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/User'
+        400:
+          description: "Invalid user supplied"
+          schema:
+            $ref: "#/definitions/Response"
+        404:
+          description: "User not found"
+          schema:
+            $ref: "#/definitions/Response"
+#
+#
+#
+#         DISH
+#
+#
+#
+  /dish/{dishname}:
+    get:
+      tags:
+      - "dish"
+      summary: "Get dish by dish name"
+      description: ""
+      operationId: "getDishByDishname"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "dishname"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Dish"
+        400:
+          description: "Invalid dishname supplied"
+          schema:
+            $ref: "#/definitions/Response"
+        404:
+          description: "Dish not found"
+          schema:
+            $ref: "#/definitions/Response"
+  #
+  #
+  #
+  #         MARKET
+  #
+  #
+  #
+  /market/{marketname}:
+    get:
+      tags:
+      - "market"
+      summary: "Returns info about market"
+      description: "Returns a map of status codes to quantities"
+      operationId: "getMarketInfo"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "marketname"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Dish"
+        400:
+          description: "Invalid dishname supplied"
+          schema:
+            $ref: "#/definitions/Response"
+        404:
+          description: "Dish not found"
+          schema:
+            $ref: "#/definitions/Response"
+#
+#
+#
+#         SECURITY AND DEFINITIONS
+#
+#
+#
+securityDefinitions:
+  petstore_auth:
+    type: "oauth2"
+    authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
+    flow: "implicit"
+    scopes:
+      write:pets: "modify pets in your account"
+      read:pets: "read your pets"
+  api_key:
+    type: "apiKey"
+    name: "api_key"
+    in: "header"
+definitions:
+  Dish:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+    xml:
+      name: "Category"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+      userStatus:
+        type: "integer"
+        format: "int32"
+        description: "User Status"
+    xml:
+      name: "User"
+  Response:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
